@@ -1,15 +1,39 @@
+/* CSS Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #fff;
+  color: #111;
+}
+
 .App {
-  text-align: center;
-  font-family: sans-serif;
+  width: 100vw;
+  min-height: 100vh;
+  padding: 2em 0;
 }
 
 .form-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
-  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
   margin: 0 auto;
+}
+
+.form-container > div {
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+select, .custom-button {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 input[type='text'] {
@@ -26,22 +50,30 @@ button {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.2s;
-  grid-column: 1 / -1; /* Make button span all columns */
 }
 
 button:hover {
   background-color: #0056b3;
 }
 
-.prompt-output {
-  margin-top: 2rem;
-  padding: 1rem;
-  background-color: #f8f9fa;
-  border: 1px solid #dee2e6;
+.custom-button {
+  max-width: 200px;
+  padding: 0.5em 1em;
+  font-size: 1rem;
+  border: none;
   border-radius: 4px;
-  max-width: 800px;
-  margin: 2rem auto;
-  text-align: left;
+  background: #1976d2;
+  color: #fff;
+  cursor: pointer;
+  margin-bottom: 0.5em;
+  transition: background 0.2s;
+}
+.custom-button:hover {
+  background: #1565c0;
+}
+
+.prompt-output {
+  margin-bottom: 1em;
 }
 
 .prompt-output p {
