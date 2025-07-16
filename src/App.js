@@ -49,7 +49,7 @@ function App() {
       moodEmotion,
     } = formData;
 
-    const prompt = `A ${ageDescriptor} years old ${specie} ${gender} with ${skinColor} skin, ${hairStyleColor}, ${eyeColor} eyes with ${expression} expression, dressed in ${clothingDescriptionStyle}, ${poseOrAction}, set against ${backgroundEnvironment}, illuminated by ${lightingTypeSource}, shot with ${camera}, composed using ${composition}, in ${artStyleMedium}, evoking a sense of ${moodEmotion}.`;
+    const prompt = `A ${ageDescriptor} ${specie} ${gender} with ${skinColor} skin, ${hairStyleColor}, ${eyeColor} eyes with ${expression} expression, dressed in ${clothingDescriptionStyle}, ${poseOrAction}, set against ${backgroundEnvironment}, illuminated by ${lightingTypeSource}, shot with ${camera}, composed using ${composition}, in ${artStyleMedium}, evoking a sense of ${moodEmotion}.`;
     setGeneratedPrompt(prompt);
   };
 
@@ -92,63 +92,62 @@ function App() {
     ],
     gender: ["Male", "Female", "Neutral"],
     specie: [
-      "Elves",
-      "Dwarves",
-      "Orcs",
-      "Goblins",
-      "Trolls",
-      "Fae (Fairies)",
-      "Giants",
-      "Tieflings",
+      "Elf",
+      "Dwarf",
+      "Orc",
+      "Goblin",
+      "Troll",
+      "Fae (Fairy)",
+      "Giant",
+      "Tiefling",
       "Dragonborn",
-      "Vulcans",
-      "Klingons",
-      "Time Lords",
+      "Vulcan",
+      "Klingon",
+      "Time Lord",
       "Na’vi",
-      "Kryptonians",
+      "Kryptonian",
       "Asari",
-      "Twi’leks",
+      "Twi’lek",
       "Zabrak",
-      "Replicants",
-      "Synths",
-      "Androids",
-      "Cylons",
+      "Replicant",
+      "Synth",
+      "Android",
+      "Cylon",
       "Geth",
       "Mechas (with AI)",
       "Chiss",
       "Minbari",
-      "Martians",
-      "Tharks",
+      "Martian",
+      "Thark",
       "Ood",
-      "Bajorans",
-      "Cardassians",
-      "Romulans",
-      "Saiyans",
-      "Namekians",
-      "Hylians",
-      "Argonians",
+      "Bajoran",
+      "Cardassian",
+      "Romulan",
+      "Saiyan",
+      "Namekian",
+      "Hylian",
+      "Argonian",
       "Khajiit",
       "Skaven",
       "Genasi",
       "Aasimar",
-      "Goliaths",
-      "Shifters",
+      "Goliath",
+      "Shifter",
       "Warforged",
-      "Quarians",
-      "Salarians",
-      "Turians",
+      "Quarian",
+      "Salarian",
+      "Turian",
       "Yautja (Predators)",
       "Xenomorphs (with humanoid traits)",
-      "Cylons",
       "Observers (Fringe)",
-      "Eternals (Marvel)",
-      "Deviants (Marvel)",
-      "Skrulls",
+      "Eternal (Marvel)",
+      "Deviant (Marvel)",
+      "Skrull",
       "Kree",
       "Inhumans",
       "Mutants (X-Men)",
       "Dren (Splice)",
-      "Engineers (Prometheus)",
+      "Engineer (Prometheus)",
       "Morlocks (The Time Machine)",
       "Eloi (The Time Machine)",
       "Trisolarans (Three-Body Problem)",
@@ -583,232 +582,299 @@ function App() {
     });
   };
 
+  // Live update prompt on form change
+  React.useEffect(() => {
+    const {
+      ageDescriptor,
+      gender,
+      specie,
+      skinColor,
+      hairStyleColor,
+      eyeColor,
+      expression,
+      clothingDescriptionStyle,
+      poseOrAction,
+      backgroundEnvironment,
+      lightingTypeSource,
+      camera,
+      composition,
+      artStyleMedium,
+      moodEmotion,
+    } = formData;
+    const prompt = `A ${ageDescriptor} ${specie} ${gender} with ${skinColor} skin, ${hairStyleColor}, ${eyeColor} eyes with ${expression} expression, dressed in ${clothingDescriptionStyle}, ${poseOrAction}, set against ${backgroundEnvironment}, illuminated by ${lightingTypeSource}, shot with ${camera}, composed using ${composition}, in ${artStyleMedium}, evoking a sense of ${moodEmotion}.`;
+    setGeneratedPrompt(prompt);
+  }, [formData]);
+
   return (
     <div className="App">
       <h1>Humanoid Picture Prompt Builder</h1>
       <div className="form-container">
-        <button type="button" onClick={randomizeAll} style={{ marginBottom: '1em' }}>
-          Randomize All
-        </button>
-        {/* Replace Age Descriptor input with a select list */}
-        <select
-          name="ageDescriptor"
-          value={formData.ageDescriptor}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Select Age Descriptor
-          </option>
-          {optionLists.ageDescriptor.map((age) => (
-            <option key={age} value={age}>
-              {age}
+        {generatedPrompt && (
+          <div style={{ marginBottom: '1em', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ fontWeight: 'bold', marginBottom: '0.5em', textAlign: 'center' }}>Prompt</div>
+            <div style={{ background: '#f5f5f5', padding: '0.5em', borderRadius: '4px', wordBreak: 'break-word', textAlign: 'center', maxWidth: 700 }}>{generatedPrompt}</div>
+            <div style={{ display: 'flex', gap: '1em', marginTop: '0.5em', justifyContent: 'center' }}>
+              <button onClick={copyToClipboard} className="custom-button">Copy to Clipboard</button>
+              <button type="button" onClick={randomizeAll} className="custom-button">Randomize All</button>
+            </div>
+          </div>
+        )}
+        <div style={{ marginBottom: '1em' }}>
+          <div>Age Descriptor</div>
+          <select
+            name="ageDescriptor"
+            value={formData.ageDescriptor}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select Age Descriptor
             </option>
-          ))}
-        </select>
-        <select
-          name="gender"
-          value={formData.gender}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Select Gender
-          </option>
-          {optionLists.gender.map((gender) => (
-            <option key={gender} value={gender}>
-              {gender}
-            </option>
-          ))}
-        </select>
-        <select
-          name="specie"
-          value={formData.specie}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Select Specie
-          </option>
-          {optionLists.specie.map((specie) => (
-            <option key={specie} value={specie}>
-              {specie}
-            </option>
-          ))}
-        </select>
-        <select
-          name="skinColor"
-          value={formData.skinColor}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Select Skin Color
-          </option>
-          {optionLists.skinColor.map((color) => (
-            <option key={color} value={color}>
-              {color}
-            </option>
-          ))}
-        </select>
-        <select
-          name="hairStyleColor"
-          value={formData.hairStyleColor}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Select Hair Style and Color
-          </option>
-          {optionLists.hairStyleColor.map((hairStyle) => (
-            <option key={hairStyle} value={hairStyle}>
-              {hairStyle}
-            </option>
-          ))}
-        </select>
-        <select
-          name="eyeColor"
-          value={formData.eyeColor}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Select Eye Color
-          </option>
-          {optionLists.eyeColor.map((color) => (
-            <option key={color} value={color}>
-              {color}
-            </option>
-          ))}
-        </select>
-        <select
-          name="expression"
-          value={formData.expression}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Select Expression
-          </option>
-          {optionLists.expression.map((expr) => (
-            <option key={expr} value={expr}>
-              {expr}
-            </option>
-          ))}
-        </select>
-        <select
-          name="clothingDescriptionStyle"
-          value={formData.clothingDescriptionStyle}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Select Clothing Description and Style
-          </option>
-          {optionLists.clothingDescriptionStyle.map((clothing) => (
-            <option key={clothing} value={clothing}>
-              {clothing}
-            </option>
-          ))}
-        </select>
-        <select
-          name="poseOrAction"
-          value={formData.poseOrAction}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Select Pose or Action
-          </option>
-          {optionLists.poseOrAction.map((pose) => (
-            <option key={pose} value={pose}>
-              {pose}
-            </option>
-          ))}
-        </select>
-        <select
-          name="backgroundEnvironment"
-          value={formData.backgroundEnvironment}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Select Background or Environment
-          </option>
-          {optionLists.backgroundEnvironment.map((environment) => (
-            <option key={environment} value={environment}>
-              {environment}
-            </option>
-          ))}
-        </select>
-        <select
-          name="lightingTypeSource"
-          value={formData.lightingTypeSource}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Select Lighting Type or Source
-          </option>
-          {optionLists.lightingTypeSource.map((style) => (
-            <option key={style} value={style}>
-              {style}
-            </option>
-          ))}
-        </select>
-        <select
-          name="camera"
-          value={formData.camera}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Select Camera
-          </option>
-          {optionLists.camera.map((camera) => (
-            <option key={camera} value={camera}>
-              {camera}
-            </option>
-          ))}
-        </select>
-        <select
-          name="composition"
-          value={formData.composition}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Select Composition
-          </option>
-          {optionLists.composition.map((composition) => (
-            <option key={composition} value={composition}>
-              {composition}
-            </option>
-          ))}
-        </select>
-        <select
-          name="artStyleMedium"
-          value={formData.artStyleMedium}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Select Art Style or Medium
-          </option>
-          {optionLists.artStyleMedium.map((style) => (
-            <option key={style} value={style}>
-              {style}
-            </option>
-          ))}
-        </select>
-        <select
-          name="moodEmotion"
-          value={formData.moodEmotion}
-          onChange={handleChange}
-        >
-          <option value="" disabled>
-            Select Mood or Emotion
-          </option>
-          {optionLists.moodEmotion.map((mood) => (
-            <option key={mood} value={mood}>
-              {mood}
-            </option>
-          ))}
-        </select>
-        <button onClick={generatePrompt}>Generate Prompt</button>
-      </div>
-      {generatedPrompt && (
-        <div className="prompt-output">
-          <p>{generatedPrompt}</p>
-          <button onClick={copyToClipboard}>Copy to Clipboard</button>
+            {optionLists.ageDescriptor.map((age) => (
+              <option key={age} value={age}>
+                {age}
+              </option>
+            ))}
+          </select>
         </div>
-      )}
+        <div style={{ marginBottom: '1em' }}>
+          <div>Gender</div>
+          <select
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select Gender
+            </option>
+            {optionLists.gender.map((gender) => (
+              <option key={gender} value={gender}>
+                {gender}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div style={{ marginBottom: '1em' }}>
+          <div>Specie</div>
+          <select
+            name="specie"
+            value={formData.specie}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select Specie
+            </option>
+            {optionLists.specie.map((specie) => (
+              <option key={specie} value={specie}>
+                {specie}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div style={{ marginBottom: '1em' }}>
+          <div>Skin Color</div>
+          <select
+            name="skinColor"
+            value={formData.skinColor}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select Skin Color
+            </option>
+            {optionLists.skinColor.map((color) => (
+              <option key={color} value={color}>
+                {color}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div style={{ marginBottom: '1em' }}>
+          <div>Hair Style and Color</div>
+          <select
+            name="hairStyleColor"
+            value={formData.hairStyleColor}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select Hair Style and Color
+            </option>
+            {optionLists.hairStyleColor.map((hairStyle) => (
+              <option key={hairStyle} value={hairStyle}>
+                {hairStyle}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div style={{ marginBottom: '1em' }}>
+          <div>Eye Color</div>
+          <select
+            name="eyeColor"
+            value={formData.eyeColor}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select Eye Color
+            </option>
+            {optionLists.eyeColor.map((color) => (
+              <option key={color} value={color}>
+                {color}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div style={{ marginBottom: '1em' }}>
+          <div>Expression</div>
+          <select
+            name="expression"
+            value={formData.expression}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select Expression
+            </option>
+            {optionLists.expression.map((expr) => (
+              <option key={expr} value={expr}>
+                {expr}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div style={{ marginBottom: '1em' }}>
+          <div>Clothing Description and Style</div>
+          <select
+            name="clothingDescriptionStyle"
+            value={formData.clothingDescriptionStyle}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select Clothing Description and Style
+            </option>
+            {optionLists.clothingDescriptionStyle.map((clothing) => (
+              <option key={clothing} value={clothing}>
+                {clothing}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div style={{ marginBottom: '1em' }}>
+          <div>Pose or Action</div>
+          <select
+            name="poseOrAction"
+            value={formData.poseOrAction}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select Pose or Action
+            </option>
+            {optionLists.poseOrAction.map((pose) => (
+              <option key={pose} value={pose}>
+                {pose}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div style={{ marginBottom: '1em' }}>
+          <div>Background or Environment</div>
+          <select
+            name="backgroundEnvironment"
+            value={formData.backgroundEnvironment}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select Background or Environment
+            </option>
+            {optionLists.backgroundEnvironment.map((environment) => (
+              <option key={environment} value={environment}>
+                {environment}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div style={{ marginBottom: '1em' }}>
+          <div>Lighting Type or Source</div>
+          <select
+            name="lightingTypeSource"
+            value={formData.lightingTypeSource}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select Lighting Type or Source
+            </option>
+            {optionLists.lightingTypeSource.map((style) => (
+              <option key={style} value={style}>
+                {style}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div style={{ marginBottom: '1em' }}>
+          <div>Camera</div>
+          <select
+            name="camera"
+            value={formData.camera}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select Camera
+            </option>
+            {optionLists.camera.map((camera) => (
+              <option key={camera} value={camera}>
+                {camera}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div style={{ marginBottom: '1em' }}>
+          <div>Composition</div>
+          <select
+            name="composition"
+            value={formData.composition}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select Composition
+            </option>
+            {optionLists.composition.map((composition) => (
+              <option key={composition} value={composition}>
+                {composition}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div style={{ marginBottom: '1em' }}>
+          <div>Art Style or Medium</div>
+          <select
+            name="artStyleMedium"
+            value={formData.artStyleMedium}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select Art Style or Medium
+            </option>
+            {optionLists.artStyleMedium.map((style) => (
+              <option key={style} value={style}>
+                {style}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div style={{ marginBottom: '1em' }}>
+          <div>Mood or Emotion</div>
+          <select
+            name="moodEmotion"
+            value={formData.moodEmotion}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select Mood or Emotion
+            </option>
+            {optionLists.moodEmotion.map((mood) => (
+              <option key={mood} value={mood}>
+                {mood}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
     </div>
   );
 }
