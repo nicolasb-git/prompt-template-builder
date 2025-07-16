@@ -5,6 +5,7 @@ function App() {
   const [formData, setFormData] = useState({
     ageDescriptor: '',
     gender: '',
+    specie: '',
     skinColor: '',
     hairStyleColor: '',
     eyeColor: '',
@@ -31,6 +32,7 @@ function App() {
     const {
       ageDescriptor,
       gender,
+      specie,
       skinColor,
       hairStyleColor,
       eyeColor,
@@ -43,7 +45,7 @@ function App() {
       moodEmotion,
     } = formData;
 
-    const prompt = `A ${ageDescriptor} ${gender} with ${skinColor} skin, ${hairStyleColor}, ${eyeColor} eyes with ${expression} expression, dressed in ${clothingDescriptionStyle}, ${poseOrAction}, set against ${backgroundEnvironment}, illuminated by ${lightingTypeSource}, in ${artStyleMedium}, evoking a sense of ${moodEmotion}.`;
+    const prompt = `A ${ageDescriptor} years old ${specie} ${gender} with ${skinColor} skin, ${hairStyleColor}, ${eyeColor} eyes with ${expression} expression, dressed in ${clothingDescriptionStyle}, ${poseOrAction}, set against ${backgroundEnvironment}, illuminated by ${lightingTypeSource}, in ${artStyleMedium}, evoking a sense of ${moodEmotion}.`;
     setGeneratedPrompt(prompt);
   };
 
@@ -53,15 +55,53 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Woman Picture Prompt Template Builder</h1>
+      <h1>Humanoid Picture Prompt Builder</h1>
       <div className="form-container">
-        <input
-          type="text"
+        {/* Replace Age Descriptor input with a select list */}
+        <select
           name="ageDescriptor"
-          placeholder="Age Descriptor"
           value={formData.ageDescriptor}
           onChange={handleChange}
-        />
+        >
+          <option value="" disabled>
+            Select Age Descriptor
+          </option>
+          {[
+            "Young",
+            "Old",
+            "Elderly",
+            "Ancient",
+            "Aged",
+            "Youthful",
+            "Juvenile",
+            "Infantile",
+            "Adolescent",
+            "Mature",
+            "Middle-aged",
+            "Senior",
+            "New",
+            "Newborn",
+            "Recent",
+            "Prime (as in 'in their prime')",
+            "Timeless",
+            "Ageless",
+            "Prehistoric",
+            "Vintage",
+            "Antique",
+            "Modern",
+            "Contemporary",
+            "Medieval",
+            "Archaic",
+            "Primeval",
+            "Centenarian",
+            "Millennial",
+            "Geriatric",
+          ].map((age) => (
+            <option key={age} value={age}>
+              {age}
+            </option>
+          ))}
+        </select>
         <select
           name="gender"
           value={formData.gender}
@@ -73,9 +113,85 @@ function App() {
           {[
             "Male",
             "Female",
+            "Neutral",
           ].map((gender) => (
             <option key={gender} value={gender}>
               {gender}
+            </option>
+          ))}
+        </select>
+        <select
+          name="specie"
+          value={formData.specie}
+          onChange={handleChange}
+        >
+          <option value="" disabled>
+            Select Specie
+          </option>
+          {[
+            "Elves",
+            "Dwarves",
+            "Orcs",
+            "Goblins",
+            "Trolls",
+            "Fae (Fairies)",
+            "Giants",
+            "Tieflings",
+            "Dragonborn",
+            "Vulcans",
+            "Klingons",
+            "Time Lords",
+            "Na’vi",
+            "Kryptonians",
+            "Asari",
+            "Twi’leks",
+            "Zabrak",
+            "Replicants",
+            "Synths",
+            "Androids",
+            "Cylons",
+            "Geth",
+            "Mechas (with AI)",
+            "Chiss",
+            "Minbari",
+            "Martians",
+            "Tharks",
+            "Ood",
+            "Bajorans",
+            "Cardassians",
+            "Romulans",
+            "Saiyans",
+            "Namekians",
+            "Hylians",
+            "Argonians",
+            "Khajiit",
+            "Skaven",
+            "Genasi",
+            "Aasimar",
+            "Goliaths",
+            "Shifters",
+            "Warforged",
+            "Quarians",
+            "Salarians",
+            "Turians",
+            "Yautja (Predators)",
+            "Xenomorphs (with humanoid traits)",
+            "Cylons",
+            "Observers (Fringe)",
+            "Eternals (Marvel)",
+            "Deviants (Marvel)",
+            "Skrulls",
+            "Kree",
+            "Inhumans",
+            "Mutants (X-Men)",
+            "Dren (Splice)",
+            "Engineers (Prometheus)",
+            "Morlocks (The Time Machine)",
+            "Eloi (The Time Machine)",
+            "Trisolarans (Three-Body Problem)",
+          ].map((specie) => (
+            <option key={specie} value={specie}>
+              {specie}
             </option>
           ))}
         </select>
