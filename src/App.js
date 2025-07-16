@@ -92,6 +92,7 @@ function App() {
     ],
     gender: ["Male", "Female", "Neutral"],
     specie: [
+      "Human",
       "Elf",
       "Dwarf",
       "Orc",
